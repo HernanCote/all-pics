@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
-function App() {
+import NavBar from './components/NavBar'
+
+import Posts from './pages/Posts';
+import UserProfile from './pages/UserProfile';
+import Login from './pages/Login';
+
+
+const ContentContainer = styled.main`
+  width: 100%;
+  padding: 1rem;
+`;
+
+const App = () => { 
+  const location = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <NavBar />
+      <ContentContainer>
+        <Switch
+          location={location}
+          key={location.pathname}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path="/login" component={Login} />
+          <Route path="/posts" component={Posts} />
+          <Route path="/profile" component={UserProfile} />
+          <Route path="/" exact component={Posts} />
+        </Switch>
+      </ContentContainer>
+    </>
   );
-}
+};
 
 export default App;
